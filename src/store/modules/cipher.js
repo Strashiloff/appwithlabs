@@ -14,7 +14,7 @@ export default {
   actions: {
     setType: ({ commit }, payload) => commit('SET_TYPE', payload),
     setKey: ({ commit }, payload) => commit('SET_KEY', payload),
-    setText: ({ commit }, payload) => commit('SET_TEXT', cipherUtils.deleteSpacesFromText(payload.text)),
+    setText: ({ commit }, payload) => commit('SET_TEXT', payload.text),
     setEncryptionTable: ({ commit }, payload) => commit('SET_ENCRYPTION_TABLE', payload),
     setNewText: ({ commit }, payload) => commit('SET_NEW_TEXT', payload),
   },

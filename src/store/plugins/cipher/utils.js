@@ -3,19 +3,20 @@ export default {
     let txt = ''
     for (let i = 0; i < text.length; i++) {
       if (text[i] === ' ') {
-        if (i % 2 === 0) {
-          if (['я','Z','z'].includes(text[i+1])) {
-            txt += String.fromCharCode(text[i+1].charCodeAt(0) - 1)
-          } else {
-            txt += String.fromCharCode(text[i+1].charCodeAt(0) + 1)
-          }
-        } else {
-          if (['я','Z','z'].includes(text[i-1])) {
-            txt += String.fromCharCode(text[i-1].charCodeAt(0) - 1)
-          } else {
-            txt += String.fromCharCode(text[i-1].charCodeAt(0) + 1)
-          }
-        }
+        txt += 'Ъ'
+        // if (i % 2 === 0) {
+        //   if (['я','Z','z'].includes(text[i+1])) {
+        //     txt += String.fromCharCode(text[i+1].charCodeAt(0) - 1)
+        //   } else {
+        //     txt += String.fromCharCode(text[i+1].charCodeAt(0) + 1)
+        //   }
+        // } else {
+        //   if (['я','Z','z'].includes(text[i-1])) {
+        //     txt += String.fromCharCode(text[i-1].charCodeAt(0) - 1)
+        //   } else {
+        //     txt += String.fromCharCode(text[i-1].charCodeAt(0) + 1)
+        //   }
+        // }
       } else {
         txt += text[i]
       }
@@ -25,6 +26,7 @@ export default {
   // Привет мир и все все все Пишу секретное сообщениее
   encryptText (text, matr) {
     let bigrams = []
+    text = this.deleteSpacesFromText(text)
     // Создаем массив биграм
     for (let i = 0, k = 0; i < text.length; i++) {
       if (i % 2 === 0) bigrams.push([])
@@ -72,25 +74,33 @@ export default {
         }
         
       } else if (coordChar1.y == coordChar2.y) {
-        if (coordChar1.x < 29) {
+        console.log(coordChar1)
+        if (coordChar1.x < 28) {
           newChar1 = matr[coordChar1.y][coordChar1.x + 1]
         } else {
           newChar1 = matr[coordChar1.y][0]
         }
 
-        if (coordChar2.x < 29) {
+        if (coordChar2.x < 28) {
           newChar2 = matr[coordChar2.y][coordChar2.x + 1]
         } else {
           newChar2 = matr[coordChar2.y][0]
         }
        
       } else {
+        console.log('-------------------')
+        console.log(char1, coordChar1)
+        console.log(char2, coordChar2)
+        console.log('-------------------')
+ 
+
         if (coordChar1.y < coordChar2.y) {
           newChar1 = matr[coordChar1.y][coordChar2.x]
           newChar2 = matr[coordChar2.y][coordChar1.x]
         } else {
-          newChar1 = matr[coordChar2.y][coordChar1.x]
-          newChar2 = matr[coordChar1.y][coordChar2.x]
+          console.log(coordChar2,coordChar1 )
+          newChar1 = matr[coordChar1.y][coordChar2.x]
+          newChar2 = matr[coordChar2.y][coordChar1.x]
         }
       }
       newBigrams.push([newChar1, newChar2])
@@ -98,6 +108,7 @@ export default {
 
     let newText = ''
     newBigrams.forEach(bigram => {
+      console.log(bigram)
       newText += bigram[0]
       newText += bigram[1]
     })
@@ -113,18 +124,18 @@ export default {
     }
 
     // На всякий случай, если пользователь решит что-нибудь добавить...
-    for (let i = 0, j = 0; i < bigrams.length; i++) {
-      let char1 = bigrams[i][0]
-      let char2 = bigrams[i][1]
+    // for (let i = 0, j = 0; i < bigrams.length; i++) {
+    //   let char1 = bigrams[i][0]
+    //   let char2 = bigrams[i][1]
 
-      if (char1 === char2) {
-        if (['я','Z','z'].includes(char2)) {
-          bigrams[i][0] = String.fromCharCode(char2.charCodeAt(0) - 1)
-        } else {
-          bigrams[i][1] = String.fromCharCode(char2.charCodeAt(0) + 1)
-        }
-      }
-    }
+    //   if (char1 === char2) {
+    //     if (['я','Z','z'].includes(char2)) {
+    //       bigrams[i][0] = String.fromCharCode(char2.charCodeAt(0) - 1)
+    //     } else {
+    //       bigrams[i][1] = String.fromCharCode(char2.charCodeAt(0) + 1)
+    //     }
+    //   }
+    // }
 
     let newBigrams = []
 
@@ -135,6 +146,10 @@ export default {
       let newChar2
 
       // y - сткроки, x - столбцы
+      console.log('------------------')
+      console.log('char1', char1)
+      console.log('char2', char2)
+
       let coordChar1 = this.findIndex(char1, matr)
       let coordChar2 = this.findIndex(char2, matr)
 
@@ -146,7 +161,7 @@ export default {
         }
 
         if (coordChar2.y > 0) {
-          newChar2 = matr[coordChar2.y + 1][coordChar2.x]
+          newChar2 = matr[coordChar2.y - 1][coordChar2.x]
         } else {
           newChar2 = matr[3][coordChar2.x]
         }
@@ -155,23 +170,31 @@ export default {
         if (coordChar1.x > 0) {
           newChar1 = matr[coordChar1.y][coordChar1.x - 1]
         } else {
-          newChar1 = matr[coordChar1.y][29]
+          newChar1 = matr[coordChar1.y][28]
         }
 
         if (coordChar2.x > 0) {
           newChar2 = matr[coordChar2.y][coordChar2.x - 1]
         } else {
-          newChar2 = matr[coordChar2.y][29]
+          newChar2 = matr[coordChar2.y][28]
         }
        
       } else {
+        console.log(char1, coordChar1)
+        console.log(char2, coordChar2)
+
         if (coordChar1.y < coordChar2.y) {
           newChar1 = matr[coordChar1.y][coordChar2.x]
           newChar2 = matr[coordChar2.y][coordChar1.x]
+          console.log('1')
         } else {
-          newChar1 = matr[coordChar2.y][coordChar1.x]
-          newChar2 = matr[coordChar1.y][coordChar2.x]
+          newChar1 = matr[coordChar1.y][coordChar2.x]
+          newChar2 = matr[coordChar2.y][coordChar1.x]
+          console.log('2')
         }
+        console.log('newChar1', newChar1)
+        console.log('newChar2', newChar2)
+        console.log('-------------------')
       }
       newBigrams.push([newChar1, newChar2])
     })
@@ -181,7 +204,7 @@ export default {
       newText += bigram[0]
       newText += bigram[1]
     })
-    return newText
+    return newText.replace(/Ъ/g, ' ')
   },
   findIndex (char, matr) {
     let x, y

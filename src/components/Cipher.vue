@@ -40,9 +40,9 @@
           <textarea cols="25" rows="6" readonly v-model="oldText"></textarea>
         </div>
         <div class="content-area">
-          <h2>{{ getType === 'encrypt' ? 'Зашифрованный текст' : 'Расшифрованный текст' }}</h2>
+          <h2 style="user-select: none; ">{{ getType === 'encrypt' ? 'Зашифрованный текст' : 'Расшифрованный текст' }}</h2>
           <textarea cols="30" rows="6" readonly v-model="newText"></textarea>
-          <h2>Ключ: {{ getKey }}</h2>
+          <h2>Ключ: <i>{{ getKey }}</i></h2>
         </div>
       </div>
     </div>
@@ -293,7 +293,6 @@ export default {
         justify-content: center;
         align-items: center;
         flex-direction: column;
-        user-select: none; 
 
         h2 {
           margin-top: 0;
@@ -327,6 +326,7 @@ export default {
               font-size: 2em;
               resize: none;
               box-sizing: border-box;
+              
             }
           } 
         }
