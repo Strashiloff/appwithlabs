@@ -4,6 +4,7 @@
     <div class="spacer"></div>
     <Main/>
     <Cipher/>
+    <RSA/>
     <Footer/>
   </div>
 </template>
@@ -13,7 +14,7 @@ import Header from './components/Header'
 import Main from './components/Main'
 import Cipher from './components/Cipher'
 import Footer from './components/Footer'
-
+import RSA from './components/RSA'
 
 export default {
   name: 'app',
@@ -21,6 +22,7 @@ export default {
     Header,
     Main,
     Cipher,
+    RSA,
     Footer
   }
 }

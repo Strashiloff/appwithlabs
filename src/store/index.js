@@ -1,19 +1,23 @@
 // modules
 import engineModule from './modules/engine'
 import sipherModule from './modules/cipher'
+import rsaModule from './modules/rsa'
 
 // plugins
-import loggerPlugins from './plugins/logger'
-import cipherPlugins from './plugins/cipher/cipher'
+import loggerPlugin from './plugins/logger'
+import cipherPlugin from './plugins/cipher/cipher'
+import rsaPlugin from './plugins/rsa'
 
 export default ({
   strict: true,
   modules: {
     ui: engineModule,
-    cipher: sipherModule
+    cipher: sipherModule,
+    rsa: rsaModule
   },
   plugins: [
-    loggerPlugins(),
-    cipherPlugins()
+    loggerPlugin(),
+    cipherPlugin(),
+    rsaPlugin()
   ]
 })

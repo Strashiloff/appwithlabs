@@ -1,0 +1,3 @@
+sudu -u postgres psql / pg_dump
+sudo -u postgres pg_dump postgres > /home/alex/dev/test_dump
+sudo -u postgres psql postgres < /home/alex/dev/test_dumpDecrypt file
