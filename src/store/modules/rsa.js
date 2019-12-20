@@ -42,8 +42,6 @@ export default {
       if (result.status == 200) {
         commit('GET_ENCRYPT', result.data)
       }
-      console.log('getEncrypt')
-      // commit('GET_ENCRYPT', payload)
     },
     actionDownloadFileEncrypt: async ({ commit }, url) => {
       await getFile(url)

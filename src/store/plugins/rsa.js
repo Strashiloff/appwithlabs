@@ -3,6 +3,10 @@ const axios = require('axios')
 export default function () {
   return store => {
     let dispatch = store.dispatch
+
+    let getDec = () => {
+      dispatch('rsa/actionDownloadFileDecrypt', 'http://localhost:5000/decrypt')
+    }
       
     store.subscribe((mutation, state) => {
       let payload = mutation.payload
@@ -15,7 +19,7 @@ export default function () {
           dispatch('rsa/actionDownloadFileEncrypt', 'http://localhost:5000/encrypt')
           break
         case 'rsa/ACTION_DOWNLOAD_FILE_ENCRYPT':
-          setTimeout(dispatch('rsa/actionDownloadFileDecrypt', 'http://localhost:5000/decrypt'), 500)
+          setTimeout(getDec(), 500)
           break
       }
     })
