@@ -1,17 +1,17 @@
 export default [
   [
     {
-      label: 'Шифрование',
+      label: 'Шифрование 1 Лаб',
       view: 'cipher'
     },
     {
-      label: 'RSA',
+      label: 'RSA 2 Лаб',
       view: 'rsa'
     },
-    // {
-    //   label: 'Зайка жми',
-    //   view: 'cipher'
-    // }
+    {
+      label: 'Диффи-Хеллмана 3 Лаб',
+      view: 'dh'
+    }
   ],
   // [ 
   //   {

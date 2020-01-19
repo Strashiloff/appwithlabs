@@ -1,26 +1,5 @@
-import main, math, random, os, sys, sympy
+import main, math, random, os, sys, sympy, utils
 from sympy import mod_inverse
-
-def getPrime():
-  endLim = 1048576 + 5000
-  a = []
-  for i in range(endLim + 1):
-    a.append(i)
-
-  a[1] = 0
-
-  i = 2
-  while i <= endLim:
-    if a[i] != 0:
-      j = i + i
-      while j <= endLim:
-        a[j] = 0
-        j = j + i
-    i += 1
-
-  a = set(a)
-  a.remove(0)
-  return list(a)
 
 def gcd (a, b):
   if b != 0:
@@ -28,16 +7,9 @@ def gcd (a, b):
 	
   return a
 
-def getIndex (array):
-  arr = []
-  for index, i in enumerate(array):
-    if i >= 1048576:
-      arr.append(i)
-  return arr
-
 def getRSA ():
-  simples = getPrime()
-  arr = getIndex(simples)
+  simples = utils.getPrime(1048576)
+  arr = utils.getIndex(simples, 1048576)
   p = arr[random.randint(1, len(arr) - 1)]
   q = arr[random.randint(1, len(arr) - 1)]
   n = p * q

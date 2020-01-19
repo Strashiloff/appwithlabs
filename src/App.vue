@@ -5,6 +5,7 @@
     <Main/>
     <Cipher/>
     <RSA/>
+    <DH/>
     <Footer/>
   </div>
 </template>
@@ -15,6 +16,7 @@ import Main from './components/Main'
 import Cipher from './components/Cipher'
 import Footer from './components/Footer'
 import RSA from './components/RSA'
+import DH from './components/DH'
 
 export default {
   name: 'app',
@@ -23,7 +25,8 @@ export default {
     Main,
     Cipher,
     RSA,
-    Footer
+    Footer,
+    DH
   }
 }
 </script>
