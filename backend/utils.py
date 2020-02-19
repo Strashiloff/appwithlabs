@@ -25,3 +25,6 @@ def getIndex (array, num):
     if i >= num:
       arr.append(i)
   return arr
+
+def XOR(a, b):
+  return bool(a) != bool(b)

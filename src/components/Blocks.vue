@@ -1,30 +1,13 @@
 <template>
-  <div class="container-component dh-component" v-show="showComponent">
+  <div class="container-component blocks-component" v-show="showComponent">
     <div class="row">
       <div class="buttons-block">
-        <input type="button" value="Сгенирировать ключи" @click="setParam">
-        <input type="button" value="Шифровать" @click="setText" :disabled="getParam == null || text == ''">
+        <input type="button" value="Зашифровать" @click="setParam" :disabled="text == '' || key == ''">
       </div>
     </div>
-    <div class="row">
-      <div class="column">
-        <p class="columnp">Сторона 1</p>
-        <div class="param" v-if="getParam">
-          <p>{{ 'a = ' + getParam.a + '  g = ' + getParam.g + '  p = ' + getParam.p }}</p>
-          <p>{{ 'A = ' + getParam.A }}</p>
-          <p>{{ 'K = ' + getParam.K1 }}</p>
-        </div>
-      </div>
-      <div style="height: 100%; margin: auto;">
-        <img style="margin: auto;" src="../assets/dh.png">
-      </div>
-      <div class="column">
-        <p class="columnp">Сторона 2</p>
-        <div class="param" v-if="getParam">
-          <p>{{ 'b = ' + getParam.b }}</p>
-          <p>{{ 'B = ' + getParam.B }}</p>
-          <p>{{ 'K = ' + getParam.K2 }}</p>
-        </div>
+    <div class="row" height="100px">
+      <div class="input-text key">
+        <textarea name="text" placeholder="Ключ" v-model="key"></textarea>
       </div>
     </div>
     <div class="row" height="300px">
@@ -34,10 +17,10 @@
     </div>
     <div class="row" height="300px">
       <div class="column no-border">
-        <textarea name="text" v-model="getEncrypt" placeholder="Зашифрованное сообщение" readonly></textarea>
+        <textarea name="text" v-model="getEncode" placeholder="Зашифрованное сообщение" readonly></textarea>
       </div>
       <div class="column no-border">
-        <textarea name="text" v-model="getDecrypt" placeholder="Расшифрованное сообщение" readonly></textarea>
+        <textarea name="text" v-model="getDecode" placeholder="Расшифрованное сообщение" readonly></textarea>
       </div>
     </div>
   </div>
@@ -47,30 +30,34 @@
 import { mapGetters, mapActions } from 'vuex'
 
 export default {
-  name: 'DH',
+  name: 'Blocks',
   data () {
     return {
-      text: ''
+      text: '',
+      key: ''
     }
   },
   computed: {
     ...mapGetters('ui', ['getView']),
-    ...mapGetters('dh', ['getParam', 'getEncrypt', 'getDecrypt']),
+    ...mapGetters('blocks', ['getDecode', 'getEncode']),
     showComponent () {
-      return this.getView === 'dh'
+      return this.getView === 'blocks'
     },
   },
   methods: {
-    ...mapActions('dh', ['setParam', 'setEncrypt']),
-    setText() {
-      this.setEncrypt(this.text)
+    ...mapActions('blocks', ['sendParamAction']),
+    setParam () {
+      this.sendParamAction({
+        text: this.text,
+        key: this.key
+      })
     }
   }
 }
 </script>
 
 <style lang="scss" scoped>
-  .dh-component {
+  .blocks-component {
     padding: 20px 50px;
     display: flex;
     flex-direction: column;
@@ -96,6 +83,12 @@ export default {
           padding: 5px;
           resize: none;
           box-sizing: border-box;
+        }
+
+        &.key {
+           textarea {
+             height: 100%;
+           }
         }
       }
 

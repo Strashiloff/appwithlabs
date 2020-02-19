@@ -1,4 +1,7 @@
-import os, rsa, glob, DH
+import os, rsa, glob, DH, lab4, lab6_huffman, lab6_lzw
+from lab7 import encodeH
+from lab5 import check
+from lab8 import encryptGamma, decryptGamma
 from flask import Flask, request, jsonify, send_from_directory, send_file
 from flask_cors import CORS
 
@@ -67,8 +70,42 @@ def encryptdh():
   sr = DH.decrypt(string)
   return jsonify(encrypt = string, decrypt = sr)
 
-# @app.route('/decryptdh', methods=['POST'])
-# def decryptdh():
-#   global string
+@app.route('/feistel', methods=['POST'])
+def feistel():
+  key = request.json['key']
+  # key = '1C'
+  # text = '䱌Это пример текста для шифрования с помощью блочного алгоритма'
+  res = lab4.networkFeistelEncode(request.json['text'], key)
+  r = lab4.networkFeistelDecode(res, key)
+  return jsonify( encode = res, decode = r, key = key)
+
+@app.route('/lab5', methods=['POST'])
+def lab5():
+  st = request.json['text']
+  bits, blocks, G, P, R, P1_1, P1, mas_s, index_error, fix_code, first_code = check(st)
+  return jsonify(bits = bits, blocks = blocks, G = G.tolist(), P = P.tolist(), R = R, P1 = P1_1, P1_error = P1, mas_s = mas_s, index_error = index_error, fix_code = fix_code, first_code = first_code)
+
+@app.route('/lab6', methods=['POST'])
+def lab6():
+  # st = 'Hello world! Hello world! Hello world!'
+  st = request.json['text']
+  size = lab6_lzw.utf8len(request.json['text'])
+  encodedLzw, encodeSize = lab6_lzw.compress(st)
+  encodeSize = lab6_lzw.utf8len(encodedLzw)
+  encodedHuff, code = lab6_huffman.huffman_encode(encodedLzw)
+  decoceHuff = lab6_huffman.huffman_decode(encodedHuff, code)
+  decoceLzw = lab6_lzw.decompress(decoceHuff)
+  return jsonify(encodedLzw = encodedLzw, size = size, encodeSize = encodeSize, encodedHuff = encodedHuff, codes = code, decoceHuff = decoceHuff, decoceLzw = decoceLzw)
+
+@app.route('/lab7', methods=['POST'])
+def lab7():
+  pas = request.json['text']
+  hashPass = encodeH(pas)
+  return jsonify(hashPass = hashPass)
   
-#   return jsonify(message = sr)
+@app.route('/lab8', methods=['POST'])
+def lab8():
+  st = request.json['text']
+  mes, gamm = encryptGamma(st)
+  res = decryptGamma(mes, gamm)
+  return jsonify( encrypt = mes, gamma = gamm, decrypt = res)

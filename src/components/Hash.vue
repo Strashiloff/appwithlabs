@@ -1,76 +1,61 @@
 <template>
-  <div class="container-component dh-component" v-show="showComponent">
+  <div class="container-component hash-component" v-show="showComponent">
     <div class="row">
       <div class="buttons-block">
-        <input type="button" value="Сгенирировать ключи" @click="setParam">
-        <input type="button" value="Шифровать" @click="setText" :disabled="getParam == null || text == ''">
-      </div>
-    </div>
-    <div class="row">
-      <div class="column">
-        <p class="columnp">Сторона 1</p>
-        <div class="param" v-if="getParam">
-          <p>{{ 'a = ' + getParam.a + '  g = ' + getParam.g + '  p = ' + getParam.p }}</p>
-          <p>{{ 'A = ' + getParam.A }}</p>
-          <p>{{ 'K = ' + getParam.K1 }}</p>
-        </div>
-      </div>
-      <div style="height: 100%; margin: auto;">
-        <img style="margin: auto;" src="../assets/dh.png">
-      </div>
-      <div class="column">
-        <p class="columnp">Сторона 2</p>
-        <div class="param" v-if="getParam">
-          <p>{{ 'b = ' + getParam.b }}</p>
-          <p>{{ 'B = ' + getParam.B }}</p>
-          <p>{{ 'K = ' + getParam.K2 }}</p>
-        </div>
+        <input type="button" value="Захэшировать" @click="setParam" :disabled="text == ''">
       </div>
     </div>
     <div class="row" height="300px">
       <div class="input-text">
-        <textarea name="text" placeholder="Сообщение" v-model="text"></textarea>
+        <div class="label-input">
+          <label for="textarea-1">Пароль</label>
+          <textarea name="text" placeholder="Введите пароль" v-model="text"></textarea>
+        </div>
       </div>
     </div>
-    <div class="row" height="300px">
-      <div class="column no-border">
-        <textarea name="text" v-model="getEncrypt" placeholder="Зашифрованное сообщение" readonly></textarea>
-      </div>
-      <div class="column no-border">
-        <textarea name="text" v-model="getDecrypt" placeholder="Расшифрованное сообщение" readonly></textarea>
+    <div v-if="getHash !== null">
+      <div class="row">
+        <div class="input-text ">
+          <div class="label-input">
+            <label for="textarea-1">Захэшированный пароль</label>
+            <textarea name="textarea-1" placeholder="Захэшированный пароль" readonly v-model="getHash"></textarea>
+          </div>
+        </div>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import { mapGetters, mapActions } from 'vuex'
+import { mapActions, mapGetters } from 'vuex'
 
 export default {
-  name: 'DH',
+  name: 'Hash',
   data () {
     return {
-      text: ''
+      text: '',
     }
   },
   computed: {
     ...mapGetters('ui', ['getView']),
-    ...mapGetters('dh', ['getParam', 'getEncrypt', 'getDecrypt']),
+    ...mapGetters('hash', ['getHash']),
     showComponent () {
-      return this.getView === 'dh'
+      return this.getView === 'hash'
     },
   },
   methods: {
-    ...mapActions('dh', ['setParam', 'setEncrypt']),
-    setText() {
-      this.setEncrypt(this.text)
+    ...mapActions('hash', ['sendPasswordAction']),
+    setParam () {
+      this.sendPasswordAction({
+        text: this.text,
+      })
     }
   }
 }
 </script>
 
 <style lang="scss" scoped>
-  .dh-component {
+  .hash-component {
     padding: 20px 50px;
     display: flex;
     flex-direction: column;
@@ -96,6 +81,18 @@ export default {
           padding: 5px;
           resize: none;
           box-sizing: border-box;
+        }
+
+        .label-input {
+          display: block;
+          width: 100%;
+        }
+
+        &.result {
+          
+          textarea {
+            height: 100%;
+          }
         }
       }
 

@@ -6,6 +6,11 @@
     <Cipher/>
     <RSA/>
     <DH/>
+    <Blocks/>
+    <LZW/>
+    <Hash/>
+    <Gamm/>
+    <Linblock/>
     <Footer/>
   </div>
 </template>
@@ -17,6 +22,11 @@ import Cipher from './components/Cipher'
 import Footer from './components/Footer'
 import RSA from './components/RSA'
 import DH from './components/DH'
+import Blocks from './components/Blocks'
+import LZW from './components/LZW'
+import Hash from './components/Hash'
+import Gamm from './components/Gamm'
+import Linblock from './components/Lin'
 
 export default {
   name: 'app',
@@ -26,7 +36,12 @@ export default {
     Cipher,
     RSA,
     Footer,
-    DH
+    DH,
+    LZW,
+    Hash,
+    Blocks,
+    Gamm,
+    Linblock
   }
 }
 </script>

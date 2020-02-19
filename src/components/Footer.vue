@@ -1,6 +1,6 @@
 <template>
   <div v-show="true" class="main-app-footer">
-    <span class="footer-text">© 2019. Strashiloff LLC. All rights reserved.</span>
+    <span class="footer-text">© 2019 - 2020. Strashiloff LLC. All rights reserved.</span>
   </div>
 </template>
 

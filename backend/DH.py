@@ -2,8 +2,8 @@ import math, random, os, sys, utils
 
 g, p = 0, 0 # public
 a, b = 0, 0 # private
-A, B = 0, 0
-K1, K2 = 0, 0
+A, B = 0, 0 # public
+K1, K2 = 0, 0 # private
 
 def getDH():
   global g, p, a, b, A, B, K1, K2
